@@ -10,7 +10,7 @@ import { HttpModule }    from '@angular/http';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
 import { CallbackComponent } from './callback.component';
-import { TrackselectionComponent } from './trackselection.component';
+import { TrackselectionComponent } from './trackselection/trackselection.component';
 import { TrackComponent } from './track.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { HeaderBarComponent } from './header-bar/header-bar.component';
