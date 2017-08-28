@@ -25,6 +25,7 @@ export class TrackselectionComponent implements OnInit {
 	tracks: Track[] = [];
     ngOnInit(): void {
         console.log("init trackselection");
+		this.spotifyService.config.authToken = localStorage.getItem('angular2-spotify-token');
 		this.getTracks();
 		
 		

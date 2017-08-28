@@ -39,7 +39,7 @@ interface HttpRequestOptions {
 @Injectable()
 //export default class SpotifyService {
 export class SpotifyService {
-  constructor( @Inject("SpotifyConfig") private config: SpotifyConfig, private http: Http) {
+  constructor( @Inject("SpotifyConfig") public config: SpotifyConfig, private http: Http) {
     config.apiBase = 'https://api.spotify.com/v1';
   }
 
