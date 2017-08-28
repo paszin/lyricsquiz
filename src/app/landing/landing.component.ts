@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import {SpotifyService} from './spotify.service';
+import {SpotifyService} from '../spotify.service';
+import { environment } from '../../environments/environment';
 
 
 import 'rxjs/add/operator/toPromise';
 
 @Component({
-  selector: 'landing',
-  templateUrl: './landing.html',
+  selector: 'app-landing',
+  templateUrl: './landing.component.html',
+  styleUrls: ['./landing.component.css'],
   providers: [ SpotifyService,{ 
 				provide: "SpotifyConfig" , 
 					useValue: {
-						clientId: '4591ffb8ffe34d61ad696a41881914c5',
-						redirectUri: 'http://localhost:4200/callback',
+						clientId: environment.spotifyConfig.clientId,
+						redirectUri: environment.spotifyConfig.redirectUri,
 						authToken: localStorage.getItem('angular2-spotify-token'),
-						scope: 'playlist-read-private playlist-read-collaborative user-library-read user-read-private'
+						scope: environment.spotifyConfig.scope
 					}
 				}]
 })
+
 export class LandingComponent implements OnInit {
 	
     ngOnInit(): void {

@@ -1,28 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {MdButtonModule, MdCheckboxModule, MdCardModule, MdListModule} from '@angular/material';
+import {MdButtonModule, MdCheckboxModule, MdCardModule, MdListModule, MdIconModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 import { HttpModule }    from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { LandingComponent } from './landing.component';
+import { LandingComponent } from './landing/landing.component';
 import { CallbackComponent } from './callback.component';
 import { TrackselectionComponent } from './trackselection.component';
 import { TrackComponent } from './track.component';
-import { QuizComponent } from './quiz.component';
+import { QuizComponent } from './quiz/quiz.component';
+import { HeaderBarComponent } from './header-bar/header-bar.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent, CallbackComponent, TrackselectionComponent, TrackComponent, LandingComponent, QuizComponent
+    AppComponent, CallbackComponent, TrackselectionComponent, TrackComponent, LandingComponent, QuizComponent, HeaderBarComponent
   ],
   imports: [
-    BrowserModule, MdButtonModule, MdCardModule, MdCheckboxModule, MdListModule, HttpModule,
+    BrowserModule, MdButtonModule, MdCardModule, MdCheckboxModule, MdListModule, MdIconModule, HttpModule, FormsModule, FlexLayoutModule,
 	  RouterModule.forRoot([
       {
         path: 'app',
-        component: AppComponent
+        component: LandingComponent
       }, 
 		  { path: '',
 			redirectTo: '/app',

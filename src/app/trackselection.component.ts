@@ -37,7 +37,8 @@ export class TrackselectionComponent implements OnInit {
 			.then(function(resp) {
 			resp.items.forEach(function(t) {
 				var track = t.track;
-				self.tracks.push({title: track.name, artist: track.artists[0].name});
+				
+				self.tracks.push({title: track.name, artist: track.artists[0].name, album: track.album.name, preview_url: track.preview_url, album_cover_url: track.album.images[0].url, checked: false});
 			});
 		});
 		//this.spotifyService.getCurrentUserPlaylists().toPromise()

@@ -1,0 +1,33 @@
+<div style="text-align: center">
+	
+	<button md-button (click)="tipp()">Tipp</button>
+	<button md-button (click)="solve()">Lösung</button>
+	<button md-button (click)="next()">Weiter</button>
+	
+	
+	<div class="flex-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+		<div class="flex-item" fxFlex="20%" fxFlex.xs="40%"></div>
+		<div class="flex-item" fxFlex>
+			<div id="lyricsbox" style="text-align: center;
+	border: solid;
+	border-width: 1px;
+	border-radius: 5px;
+	width: 80vw;">
+				<h3 *ngFor="let part of parts">
+					{{part}}
+				</h3>
+			</div>
+		</div>
+		<div class="flex-item" fxFlex="20%"></div>
+	</div>
+	
+	<div *ngIf="showSolution">
+
+		<h2>{{aTrack.artist}} - {{aTrack.title}}</h2>
+
+	</div>
+
+
+
+
+</div>

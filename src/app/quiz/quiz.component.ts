@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SpotifyService } from './spotify.service';
-import { LyricsService } from './lyrics.service';
+import { SpotifyService } from '../spotify.service';
+import { LyricsService } from '../lyrics.service';
 
-import { Track } from './track';
+import { Track } from '../track';
+
+import { environment } from '../../environments/environment';
+
 import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'quiz',
-  templateUrl: './quiz.html',
+  templateUrl: 'quiz.component.html',
   providers: [ LyricsService, SpotifyService,{ 
 				provide: "SpotifyConfig" , 
 					useValue: {
-						clientId: '4591ffb8ffe34d61ad696a41881914c5',
-						redirectUri: 'http://localhost:4200/callback',
+						clientId: environment.spotifyConfig.clientId,
+						redirectUri: environment.spotifyConfig.redirectUri,
 						authToken: localStorage.getItem('angular2-spotify-token'),
-						scope: 'user-follow-modify user-follow-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-library-read user-library-modify user-read-private'
+						scope: environment.spotifyConfig.scope
 					}
 				}]
 })

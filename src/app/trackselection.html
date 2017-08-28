@@ -2,10 +2,20 @@
 
 	<h1>Wähle aus, welche Lieder in dein Musikquiz sollen</h1>
 
-	<button md-button (click)="next()">Weiter</button>
+	<button md-raised-button (click)="next()">Weiter</button>
 
-	<md-list style="height: 80vh">
-		<track *ngFor="let track of tracks" [track]="track">
-	</md-list>
+<md-list>
+  <md-list-item *ngFor="let track of tracks" (click)="track.checked = !track.checked">
+    <img md-list-avatar src="{{track.album_cover_url}}">
+    <h3 md-line> {{track.title}} </h3>
+    <p md-line>
+      <span> {{track.artist}} </span>
+      <span>  ({{track.album}}) </span>
+    </p>
+	  <md-checkbox [(ngModel)]="track.checked"></md-checkbox>
+	  <md-divider></md-divider>
+  </md-list-item>
+</md-list>
+	
 
 </div>
