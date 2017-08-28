@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   spotifyConfig : {
-    clientId: '4591ffb8ffe34d61ad696a41881914c5',
+    clientId: 'e21b27e44c704dc1b543ced51018dca7',
 	redirectUri: 'http://localhost:4200/callback',
 	//authToken: localStorage.getItem('angular2-spotify-token'),
 	scope: 'playlist-read-private playlist-read-collaborative user-library-read user-read-private'

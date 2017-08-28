@@ -2,19 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import {SpotifyService} from './spotify.service';
 import {Router} from '@angular/router';
 
-import { Track } from './track';
+import { environment } from '../../environments/environment';
+
+import { Track } from '../track';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'trackselection',
-  templateUrl: './trackselection.html',
+  templateUrl: './trackselection.component.html',
   providers: [  SpotifyService,{ 
 				provide: "SpotifyConfig" , 
 					useValue: {
-						clientId: '4591ffb8ffe34d61ad696a41881914c5',
-						redirectUri: 'http://localhost:4200/callback',
+						clientId: environment.spotifyConfig.clientId,
+						redirectUri: environment.spotifyConfig.redirectUri,
 						authToken: localStorage.getItem('angular2-spotify-token'),
-						scope: 'user-follow-modify user-follow-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-library-read user-library-modify user-read-private'
+						scope: environment.spotifyConfig.scope
 					}
 				}]
 })
