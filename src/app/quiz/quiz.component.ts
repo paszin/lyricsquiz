@@ -30,12 +30,12 @@ export class QuizComponent implements OnInit {
 	startIndex: number;
 	lines: string[];
 	showSolution = false;
+	counter: number = 0;
 	tracks: Track[] = JSON.parse(localStorage.getItem('tracks'));
     ngOnInit(): void {
         console.log("init trackselection");
 		this.next();
-		
-		
+
     }
 	
 	
@@ -48,12 +48,14 @@ export class QuizComponent implements OnInit {
 		this.parts = [];
 		this.startIndex = null;
 		this.lines = null;
+		this.counter++;
 		let self = this;
 		var track = this.tracks.splice(Math.floor(Math.random()*this.tracks.length), 1)[0];
 		this.aTrack = track;
 		this.lyricsService.getServerLyrics(track.artist, track.title).then(function(text) {
 			if (text == null) {
 				console.log("now lyrics found for", track.title);
+				self.counter--;
 				self.next();
 				return
 			}
