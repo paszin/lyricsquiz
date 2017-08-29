@@ -52,6 +52,11 @@ export class QuizComponent implements OnInit {
 		var track = this.tracks.splice(Math.floor(Math.random()*this.tracks.length), 1)[0];
 		this.aTrack = track;
 		this.lyricsService.getServerLyrics(track.artist, track.title).then(function(text) {
+			if (text == null) {
+				console.log("now lyrics found for", track.title);
+				self.next();
+				return
+			}
 			console.log(text);
 			self.lines = text.split("\n").filter(l => (l.length > 1));
 			var part : string = "";

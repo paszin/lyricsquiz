@@ -101,13 +101,12 @@ export class LyricsService {
         const url = "https://api.lyrics.ovh/v1/" + interpret + "/" + title;
         return this.http.get(url)
              .toPromise()
-             .then(this.extractLyrics);
-             //.catch();
+             .then(this.extractLyrics)
+             .catch(() => null); //return null if no lyrics found
         
     }
     
     extractLyrics(response): string {
-		
         return JSON.parse(response._body).lyrics
     }
 }
