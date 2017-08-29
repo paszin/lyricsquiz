@@ -51,7 +51,7 @@ export class QuizComponent implements OnInit {
 		this.aTrack = track;
 		this.lyricsService.getServerLyrics(track.artist, track.title).then(function(text) {
 			console.log(text);
-			self.lines = text.split("\n");
+			self.lines = text.split("\n").filter(l => (l.length > 1));
 			var part : string = "";
 			var retries : number = 0;
 			while ((part.length <= 30) && retries < self.lines.length/2) {
