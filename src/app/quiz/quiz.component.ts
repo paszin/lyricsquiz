@@ -24,6 +24,7 @@ import 'rxjs/add/operator/toPromise';
 })
 export class QuizComponent implements OnInit {
 	aTrack: Track;
+	audio;
 	part: string;
 	parts : string[] = [];
 	startIndex: number;
@@ -43,6 +44,7 @@ export class QuizComponent implements OnInit {
 	
 	next(): void {
 		this.showSolution = false;
+		this.audio = null;
 		this.parts = [];
 		this.startIndex = null;
 		this.lines = null;
@@ -76,6 +78,25 @@ export class QuizComponent implements OnInit {
 	
 	solve() : void {
 		this.showSolution = true;
+	}
+	
+	playPauseSample() : void {
+		if (this.audio) {
+			this.pauseSample();
+			return
+		}
+		this.playSample();
+	}
+	
+	playSample() : void {
+		
+		this.audio = new Audio(this.aTrack.preview_url);
+		this.audio.play();
+	}
+	
+	pauseSample() : void {
+		this.audio.pause();
+		this.audio = null;
 	}
 	
 }
