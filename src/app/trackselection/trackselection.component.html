@@ -1,21 +1,29 @@
-<div>
+<div class="flex-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+	<div class="flex-item" fxFlex="30%" fxFlex.xs="5%"></div>
+	<div class="flex-item" fxFlex>
+		<div>
 
-	<h1>Wähle aus, welche Lieder in dein Musikquiz sollen</h1>
+			<h1>Wähle aus, welche Lieder in dein Musikquiz sollen</h1>
 
-	<button md-raised-button (click)="next()">Weiter</button>
+			<button md-raised-button md-accent (click)="next()">Weiter</button>
+		</div>
+		<div>
+			<md-list>
+				<md-list-item *ngFor="let track of tracks">
+					<!--(click)="track.checked = !track.checked"-->
 
-<md-list>
-  <md-list-item *ngFor="let track of tracks" (click)="track.checked = !track.checked">
-    <img md-list-avatar src="{{track.album_cover_url}}">
-    <h3 md-line> {{track.title}} </h3>
-    <p md-line>
-      <span> {{track.artist}} </span>
-      <span>  ({{track.album}}) </span>
-    </p>
-	  <md-checkbox [(ngModel)]="track.checked"></md-checkbox>
-	  <md-divider></md-divider>
-  </md-list-item>
-</md-list>
-	
-
+					<img md-list-avatar src="{{track.album_cover_url}}">
+					<h3 md-line> {{track.title}} </h3>
+					<p md-line>
+						<span> {{track.artist}} </span>
+						<span>  ({{track.album}}) </span>
+					</p>
+					<md-checkbox [(ngModel)]="track.checked"></md-checkbox>
+					<md-divider></md-divider>
+				</md-list-item>
+			</md-list>
+			<button md-raised-button (click)="getTracks()">mehr laden</button>
+		</div>
+	</div>
+	<div class="flex-item" fxFlex="30%"></div>
 </div>

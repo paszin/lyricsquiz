@@ -36,7 +36,7 @@ export class TrackselectionComponent implements OnInit {
 	
 	getTracks(): void {
 		var self = this;
-		this.spotifyService.getSavedUserTracks().toPromise()
+		this.spotifyService.getSavedUserTracks({offset: this.tracks.length}).toPromise()
 			.then(function(resp) {
 			resp.items.forEach(function(t) {
 				var track = t.track;
@@ -49,8 +49,10 @@ export class TrackselectionComponent implements OnInit {
 	}
 	
 	next(): void {
-		localStorage.setItem('tracks', JSON.stringify(this.tracks));
+		localStorage.setItem('tracks', JSON.stringify(this.tracks.filter((t) => t.checked)));
 		this.router.navigateByUrl('/quiz');
 	}
+	
+	
 	
 }
