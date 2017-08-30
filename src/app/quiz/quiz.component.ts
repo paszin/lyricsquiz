@@ -63,16 +63,16 @@ export class QuizComponent implements OnInit {
 			self.lines = text.split("\n").filter(l => (l.length > 1));
 			var part : string = "";
 			var retries : number = 0;
-			while ((part.length <= 30) && retries < self.lines.length/2) {
+			while ((part.length <= 20) && retries < self.lines.length/2) {
 				retries = retries + 1;
 				self.startIndex = Math.trunc(Math.random()*self.lines.length);
 				part = self.lines[self.startIndex];
-				if (part.length > 30) {
+				if (part.length > 20) {
 					self.parts = [part];
 					break;
 				}
 			}
-			if (retries >= 5) {
+			if (retries >= self.lines.length/2) {
 				console.log("failed", track);
 				this.next();
 			}

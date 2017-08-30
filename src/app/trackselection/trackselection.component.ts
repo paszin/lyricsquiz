@@ -20,15 +20,19 @@ import 'rxjs/add/operator/toPromise';
 					}
 				}]
 })
+
+
+
+
 export class TrackselectionComponent implements OnInit {
 	aTrack: Track;
 	tracks: Track[] = [];
+	selectedTracks: number = 0;
+	albums = [];
     ngOnInit(): void {
         console.log("init trackselection");
 		this.spotifyService.config.authToken = localStorage.getItem('angular2-spotify-token');
 		this.getTracks();
-		
-		
     }
 	
 	
@@ -48,11 +52,41 @@ export class TrackselectionComponent implements OnInit {
     	//	.then(function(resp) {debugger;});
 	}
 	
+	getAlbums(): void {
+		function mapTrack(track, album) {
+	return {title: track.name, artist: track.artists[0].name, album: album, preview_url: track.preview_url, checked: true};
+	
+}
+		var self = this;
+		this.spotifyService.getSavedUserAlbums({offset: this.albums.length}).toPromise()
+			.then(function(resp) {
+			resp.items.forEach(function(a) {
+				var album = a.album;
+				self.albums.push({name: album.name, album_cover_url: album.images[0].url, artist: album.artists[0].name, tracks: album.tracks.items.map(mapTrack, {album: album.name}), checked: false});
+			});
+		});
+	}
+	
+	updateCounter(checked) {
+		//checked is not updated yet (checked=true --> -1)
+		this.selectedTracks += checked ? -1 : 1;
+	}
+	
+	updateCounterAlbum(album) {
+		//checked is not updated yet (checked=true --> -1)
+		//update checkmarks in album tab?
+		this.selectedTracks += album.checked ? -1*album.tracks.length : 1*album.tracks.length;
+	}
+	
 	next(): void {
-		localStorage.setItem('tracks', JSON.stringify(this.tracks.filter((t) => t.checked)));
+		var selectedTracks = this.tracks.filter((t) => t.checked);
+		this.albums.filter((a) => a.checked).forEach(function(album) {
+			selectedTracks = selectedTracks.concat(album.tracks);
+		});
+		
+		localStorage.setItem('tracks', JSON.stringify(selectedTracks));
 		this.router.navigateByUrl('/quiz');
 	}
 	
-	
-	
+
 }
