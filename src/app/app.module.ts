@@ -22,7 +22,7 @@ import { HeaderBarComponent } from './header-bar/header-bar.component';
     AppComponent, CallbackComponent, TrackselectionComponent, TrackComponent, LandingComponent, QuizComponent, HeaderBarComponent
   ],
   imports: [
-    BrowserModule, MdButtonModule, MdCardModule, MdCheckboxModule, MdListModule, MdIconModule, MdTabsModule, HttpModule, FormsModule, FlexLayoutModule, MdToolbarModule, BrowserAnimationsModule, StickyModule,
+    BrowserModule, MdButtonModule, MdCardModule, MdCheckboxModule, MdListModule, MdIconModule, MdTabsModule, HttpModule, FormsModule, FlexLayoutModule, MdToolbarModule, BrowserAnimationsModule,
 	  RouterModule.forRoot([
       {
         path: 'app',
