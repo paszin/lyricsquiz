@@ -2,3 +2,24 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /*optional add hammer.js */
 
+
+
+@font-face {
+    font-family: Casual;
+    src: url("./assets/fonts/Casual-Regular.ttf");
+}
+
+.title {
+	font-family: Casual !important;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+	background-image: url(assets/Blurred-Background_6.jpg);
+	background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+}
