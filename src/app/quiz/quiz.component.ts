@@ -12,6 +12,7 @@ import 'rxjs/add/operator/toPromise';
 @Component({
   selector: 'quiz',
   templateUrl: 'quiz.component.html',
+  styleUrls: ['./quiz.component.css'],
   providers: [ LyricsService, SpotifyService,{ 
 				provide: "SpotifyConfig" , 
 					useValue: {

@@ -1,24 +1,30 @@
-<div style="text-align: center">
-	
-	<div class="flex-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center">
+<div>
+
+	<!--stats-->
+	<div class="flex-container" fxLayout="row" fxLayoutAlign="space-around center" style="margin-top: 10px">
 		<span>Erratene Songs: <b>{{counterRight}}</b></span>
 		<span>Gefragte Songs: <b>{{counter-1}}</b></span>
 		<span>Verbleibende Songs: <b>{{counterRemaining}}</b></span>
-	
+
 	</div>
-	<button md-button (click)="tipp()">Tipp</button>
-	<button md-button (click)="solve()">Lösung</button>
-	<button md-button (click)="next()">Weiter</button>
-	
-	
+
+	<div class="flex-container" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutWrap fxLayoutGap="1rem" style="margin-top: 10px; margin-bottom: 15px;">
+
+		<button class="button-margin" style="margin: 5px;" md-raised-button (click)="tipp()">Tipp</button>
+		<button md-raised-button class="button-margin" style="margin: 5px" *ngIf="aTrack && aTrack.preview_url" (click)="playPauseSample()">
+			<span *ngIf="audio">Stopp</span>
+			<span *ngIf="!audio">Anspielen</span>
+		</button>
+		<button md-raised-button class="button-margin" style="margin: 5px" (click)="solve()">Lösung</button>
+		<button md-raised-button class="button-margin" style="margin: 5px;" (click)="next()">Weiter</button>
+
+	</div>
+
+
 	<div class="flex-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
-		<div class="flex-item" fxFlex="20%" fxFlex.xs="40%"></div>
+		<div class="flex-item" fxFlex="20%" fxFlex.xs="0%"></div>
 		<div class="flex-item" fxFlex>
-			<div id="lyricsbox" style="text-align: center;
-	border: solid;
-	border-width: 1px;
-	border-radius: 5px;
-	width: 80vw;">
+			<div id="lyricsbox" class="frame-around">
 				<h3 *ngFor="let part of parts">
 					{{part}}
 				</h3>
@@ -26,19 +32,41 @@
 		</div>
 		<div class="flex-item" fxFlex="20%"></div>
 	</div>
-	
-	<div *ngIf="showSolution">
 
-		<h2>{{aTrack.artist}} - {{aTrack.title}}</h2>
-		<button md-button (click)="playPauseSample()">play/pause</button>
-		
-		
-		<button md-button (click)="rightAnswerAndNext()">gewusst</button>
-	<button md-button (click)="next()">nicht gewusst</button>
+	<div *ngIf="showSolution">
+		<div class="flex-container" fxLayout="row" fxLayoutAlign="center center">
+			<div class="flex-item" fxFlex="20%" fxFlex.xs="0%"></div>
+			<div class="flexItem" fxFlex>
+				<div class="flex-container frame-around" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center" style="margin-top: 10px; margin-bottom: 15px;">
+
+					<div fxFlex="20">
+						<img src="{{aTrack.album_cover_url}}" style="width: 100%">
+					</div>
+					<div>
+
+						<h3> {{aTrack.title}} </h3>
+						<h4>
+							<span> {{aTrack.artist}} </span>
+							<span>  ({{aTrack.album}}) </span>
+						</h4>
+					</div>
+
+				</div>
+			</div>
+			<div class="flex-item" fxFlex="20%"></div>
+		</div>
+
+
+
+		<div>
+			<div class="flex-container" fxLayout="row" fxLayoutAlign="center center">
+			<button md-button (click)="rightAnswerAndNext()">gewusst</button>
+			<button md-button (click)="next()">nicht gewusst</button>
+			</div>
+
+		</div>
+
 
 	</div>
-
-
-
 
 </div>
