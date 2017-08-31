@@ -1,13 +1,17 @@
 <div style="text-align: center">
 	
-	<span>Track: {{counter}}</span>
+	<div class="flex-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center">
+		<span>Erratene Songs: <b>{{counterRight}}</b></span>
+		<span>Gefragte Songs: <b>{{counter-1}}</b></span>
+		<span>Verbleibende Songs: <b>{{counterRemaining}}</b></span>
 	
+	</div>
 	<button md-button (click)="tipp()">Tipp</button>
 	<button md-button (click)="solve()">Lösung</button>
 	<button md-button (click)="next()">Weiter</button>
 	
 	
-	<div class="flex-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+	<div class="flex-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
 		<div class="flex-item" fxFlex="20%" fxFlex.xs="40%"></div>
 		<div class="flex-item" fxFlex>
 			<div id="lyricsbox" style="text-align: center;
@@ -27,6 +31,10 @@
 
 		<h2>{{aTrack.artist}} - {{aTrack.title}}</h2>
 		<button md-button (click)="playPauseSample()">play/pause</button>
+		
+		
+		<button md-button (click)="rightAnswerAndNext()">gewusst</button>
+	<button md-button (click)="next()">nicht gewusst</button>
 
 	</div>
 

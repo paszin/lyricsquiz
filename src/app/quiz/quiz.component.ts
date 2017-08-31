@@ -31,9 +31,11 @@ export class QuizComponent implements OnInit {
 	lines: string[];
 	showSolution = false;
 	counter: number = 0;
+	counterRemaining: number = 0;
+	counterRight: number = 0;
 	tracks: Track[] = JSON.parse(localStorage.getItem('tracks'));
     ngOnInit(): void {
-        console.log("init trackselection");
+        this.counterRemaining = this.tracks.length;
 		this.next();
 
     }
@@ -49,8 +51,13 @@ export class QuizComponent implements OnInit {
 		this.startIndex = null;
 		this.lines = null;
 		this.counter++;
+		
+		if (this.audio) {
+			this.pauseSample();
+		}
 		let self = this;
 		var track = this.tracks.splice(Math.floor(Math.random()*this.tracks.length), 1)[0];
+		this.counterRemaining = this.tracks.length;
 		this.aTrack = track;
 		this.lyricsService.getServerLyrics(track.artist, track.title).then(function(text) {
 			if (text == null) {
@@ -77,6 +84,11 @@ export class QuizComponent implements OnInit {
 				this.next();
 			}
 		});
+	}
+	
+	rightAnswerAndNext() : void {
+		this.counterRight++;
+		this.next();
 	}
 	
 	tipp() : void {
