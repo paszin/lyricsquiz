@@ -1,4 +1,12 @@
-# MyApp
+[![Build Status](https://travis-ci.org/paszin/lyricsquiz.svg?branch=master)](https://travis-ci.org/paszin/lyricsquiz)
+
+# LyricsQuiz!
+
+
+Connect with Spotify, select songs and start the quiz. 
+
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.6.
 
