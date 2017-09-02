@@ -53,8 +53,9 @@ export class TrackselectionComponent implements OnInit {
 	}
 	
 	getAlbums(): void {
-		function mapTrack(track, album) {
-	return {title: track.name, artist: track.artists[0].name, album: album, preview_url: track.preview_url, checked: true};
+		function mapTrack(track) {
+		
+	return {title: track.name, artist: track.artists[0].name, album: this.albumName, album_cover_url: this.album_cover_url, preview_url: track.preview_url, checked: true};
 	
 }
 		var self = this;
@@ -62,7 +63,7 @@ export class TrackselectionComponent implements OnInit {
 			.then(function(resp) {
 			resp.items.forEach(function(a) {
 				var album = a.album;
-				self.albums.push({name: album.name, album_cover_url: album.images[0].url, artist: album.artists[0].name, tracks: album.tracks.items.map(mapTrack, {album: album.name}), checked: false});
+				self.albums.push({name: album.name, album_cover_url: album.images[0].url, artist: album.artists[0].name, tracks: album.tracks.items.map(mapTrack, {albumName: album.name, album_cover_url: album.images[0].url}), checked: false});
 			});
 		});
 	}

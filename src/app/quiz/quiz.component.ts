@@ -92,6 +92,11 @@ export class QuizComponent implements OnInit {
 		this.next();
 	}
 	
+	notMyFaultAndNext() : void {
+		this.counter--;
+		this.next();
+	}
+	
 	tipp() : void {
 		this.parts.push(this.lines[this.startIndex+this.parts.length]);
 	}

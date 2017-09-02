@@ -2,7 +2,7 @@
 
 	<!--stats-->
 	<div class="flex-container" fxLayout="row" fxLayoutAlign="space-around center" style="margin-top: 10px">
-		<span>Erratene Songs: <b>{{counterRight}}</b></span>
+		<span>Erratende Songs: <b>{{counterRight}}</b></span>
 		<span>Gefragte Songs: <b>{{counter-1}}</b></span>
 		<span>Verbleibende Songs: <b>{{counterRemaining}}</b></span>
 
@@ -30,14 +30,14 @@
 				</h3>
 			</div>
 		</div>
-		<div class="flex-item" fxFlex="20%"></div>
+		<div class="flex-item" fxFlex="20%" fxFlex.xs="0%"></div>
 	</div>
 
 	<div *ngIf="showSolution">
 		<div class="flex-container" fxLayout="row" fxLayoutAlign="center center">
-			<div class="flex-item" fxFlex="20%" fxFlex.xs="0%"></div>
+			<div class="flex-item" fxFlex="20%"></div>
 			<div class="flexItem" fxFlex>
-				<div class="flex-container frame-around" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center" style="margin-top: 10px; margin-bottom: 15px;">
+				<div class="flex-container frame-around" fxLayout="row" fxLayoutAlign="space-around center" style="margin-top: 10px; margin-bottom: 15px;">
 
 					<div fxFlex="20">
 						<img src="{{aTrack.album_cover_url}}" style="width: 100%">
@@ -62,6 +62,7 @@
 			<div class="flex-container" fxLayout="row" fxLayoutAlign="center center">
 			<button md-button (click)="rightAnswerAndNext()">gewusst</button>
 			<button md-button (click)="next()">nicht gewusst</button>
+			<button md-button (click)="notMyFaultAndNext()">nicht meine schuld</button>
 			</div>
 
 		</div>
