@@ -7,8 +7,8 @@ describe('my-app App', () => {
     page = new MyAppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display login button', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getButtonText()).toEqual('LOGIN WITH SPOTIFY');
   });
 });
