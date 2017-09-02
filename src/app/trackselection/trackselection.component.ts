@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {SpotifyService} from '../spotify.service';
 import {Router} from '@angular/router';
 
+import series from 'async/series';
+import parallel from 'async/parallel';
+import each from 'async/each';
+
 import { environment } from '../../environments/environment';
 
 import { Track } from '../track';
@@ -25,16 +29,15 @@ import 'rxjs/add/operator/toPromise';
 
 
 export class TrackselectionComponent implements OnInit {
-	aTrack: Track;
 	tracks: Track[] = [];
-	selectedTracks: number = 0;
 	albums = [];
+	playlists = [];
+	selectedTracks: number = 0;
+	
     ngOnInit(): void {
-        console.log("init trackselection");
 		this.spotifyService.config.authToken = localStorage.getItem('angular2-spotify-token');
 		this.getTracks();
     }
-	
 	
 	constructor(private spotifyService: SpotifyService, private router: Router) { }
 	
@@ -48,16 +51,15 @@ export class TrackselectionComponent implements OnInit {
 				self.tracks.push({title: track.name, artist: track.artists[0].name, album: track.album.name, preview_url: track.preview_url, album_cover_url: track.album.images[0].url, checked: false});
 			});
 		});
-		//this.spotifyService.getCurrentUserPlaylists().toPromise()
-    	//	.then(function(resp) {debugger;});
+		
 	}
 	
 	getAlbums(): void {
-		function mapTrack(track) {
 		
-	return {title: track.name, artist: track.artists[0].name, album: this.albumName, album_cover_url: this.album_cover_url, preview_url: track.preview_url, checked: true};
-	
-}
+		function mapTrack(track) {
+			return {title: track.name, artist: track.artists[0].name, album: this.albumName, album_cover_url: this.album_cover_url, preview_url: track.preview_url, checked: true};
+		}
+		
 		var self = this;
 		this.spotifyService.getSavedUserAlbums({offset: this.albums.length}).toPromise()
 			.then(function(resp) {
@@ -65,6 +67,16 @@ export class TrackselectionComponent implements OnInit {
 				var album = a.album;
 				self.albums.push({name: album.name, album_cover_url: album.images[0].url, artist: album.artists[0].name, tracks: album.tracks.items.map(mapTrack, {albumName: album.name, album_cover_url: album.images[0].url}), checked: false});
 			});
+		});
+	}
+	
+	getPlaylists() : void {
+		var self = this;
+		this.spotifyService.getCurrentUserPlaylists({offset: this.playlists.length}).toPromise()
+			.then(function(resp) {
+				resp.items.forEach(function(playlist) {
+					self.playlists.push({name: playlist.name, cover_url: playlist.images[0].url, owner: playlist.owner.display_name || playlist.owner.id, track_count: playlist.tracks.total, tracks_url: playlist.tracks.href, checked: false, id: playlist.id, user_id : playlist.owner.id});
+				});
 		});
 	}
 	
@@ -79,14 +91,55 @@ export class TrackselectionComponent implements OnInit {
 		this.selectedTracks += album.checked ? -1*album.tracks.length : 1*album.tracks.length;
 	}
 	
+	updateCounterPlaylist(playlist) {
+		//checked is not updated yet (checked=true --> -1)
+		this.selectedTracks += playlist.checked ? -1*playlist.tracks_count : 1*playlist.track_count;
+	}
+	
 	next(): void {
-		var selectedTracks = this.tracks.filter((t) => t.checked);
-		this.albums.filter((a) => a.checked).forEach(function(album) {
-			selectedTracks = selectedTracks.concat(album.tracks);
+		var self = this;
+		
+		var selectedTracks = [];
+		parallel([
+			function addFromTracks(cb) {
+				cb(null, self.tracks.filter((t) => t.checked));
+			},
+			function addFromAlbums(cb) {
+				var selection = [];
+				self.albums.filter((a) => a.checked).forEach(function(album) {
+					selection = selection.concat(album.tracks);
+				});
+				cb(null, selection);
+			},
+			function addFromPlaylists(cb) {
+				var selection = [];
+				each(self.playlists.filter((p) => p.checked), 
+						   function handlePlaylist(playlist, cb) {
+								self.spotifyService.getPlaylistTracks(playlist.user_id, playlist.id, {limit: 50})
+								.toPromise()
+								.then(function(resp) {
+									resp.items.forEach(function(t) {
+										var track = t.track;
+										selection.push({title: track.name, artist: track.artists[0].name, album: track.album.name, preview_url: track.preview_url, album_cover_url: track.album.images[0].url});
+									});
+									cb(null);
+								});
+							},
+						  	function (err) {
+					cb(null, selection);
+				});
+			}
+		], function(err, result) {
+			var tracks = result[0].concat(result[1]).concat(result[2]);
+			localStorage.setItem('tracks', JSON.stringify(tracks));
+			self.router.navigateByUrl('/quiz');
 		});
 		
-		localStorage.setItem('tracks', JSON.stringify(selectedTracks));
-		this.router.navigateByUrl('/quiz');
+		
+		
+		
+		
+		
 	}
 	
 

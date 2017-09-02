@@ -47,7 +47,7 @@ export class QuizComponent implements OnInit {
 	
 	next(): void {
 		this.showSolution = false;
-		this.audio = null;
+		
 		this.parts = [];
 		this.startIndex = null;
 		this.lines = null;
@@ -67,7 +67,6 @@ export class QuizComponent implements OnInit {
 				self.next();
 				return
 			}
-			console.log(text);
 			self.lines = text.split("\n").filter(l => (l.length > 1));
 			var part : string = "";
 			var retries : number = 0;
@@ -81,8 +80,9 @@ export class QuizComponent implements OnInit {
 				}
 			}
 			if (retries >= self.lines.length/2) {
-				console.log("failed", track);
-				this.next();
+				console.log("failed to parse lyrics", track);
+				self.counter--;
+				self.next();
 			}
 		});
 	}

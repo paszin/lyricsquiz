@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 		this.router.navigateByUrl('/trackselection');
       };
      
-    constructor(private router: Router) { }
+    constructor(public router: Router) { }
 
 
 }
